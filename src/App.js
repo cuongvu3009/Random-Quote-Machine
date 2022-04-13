@@ -1,23 +1,28 @@
-import logo from './logo.svg';
 import './App.css';
+import React, { useState } from 'react';
+import Quotes from './Quotes';
+import data from './data';
 
 function App() {
+  const [quotes, setQuotes] = useState(data);
+  const [quote, setQuote] = useState({});
+  const [color, setColor] = useState('');
+
+  const getQuote = async () => {
+    const randomNum = await Math.floor(Math.random() * quotes.length);
+    const randomQuote = await quotes[randomNum];
+    setQuote(randomQuote);
+    setColor(randomQuote.color);
+  };
+
+  const handleClick = () => {
+    getQuote();
+  };
+  console.log(quote);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App' style={{ backgroundColor: color }}>
+      <Quotes quote={quote} handleClick={handleClick} color={color} />
     </div>
   );
 }
